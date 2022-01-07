@@ -12,4 +12,3 @@ Receives Heroku webhooks regarding the state of ChessCord, modifies the content,
  - `python` - The programming language used
      - `flask` - Used to run the webserver
      - `requests` - For sending webhook requests
- - `vercel` - For deployment
