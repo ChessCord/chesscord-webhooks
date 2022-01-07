@@ -14,24 +14,31 @@ def heroku():
     f = request.json
     print(f)
     if f.get("resource") == "build":
+        c = None
         if f.get("action") == "update":
-            title = "New build started"
-            description = "Heroku has started deploying a new version of ChessCord. The bot will be down for a few minutes while the new version is starting up."
-        else:
             title = "Build complete"
             description = "Heroku has finished deploying a new version of ChessCord. The bot should now be back online, although restoring full functionality might take about a minute."
+            color = 1752220
+        else:
+            title = "New build started"
+            description = "Heroku has started deploying a new version of ChessCord. The bot will be down for a few minutes while the new version is starting up."
+            color = 15158332
     else:
+        c = f'ChessCord is currently `{f.get("data").get("state")}`...'
         if f.get("action") == "destroy":
             title = "ChessCord shutting down"
             description="ChessCord is being terminated. This is most likely part of a daily restart or a new build, and the bot will come back online soon."
+            color = 15158332
         elif f.get("action") == "create":
             title = "ChessCord starting up"
             description="ChessCord is now starting up and will be online shortly."
+            color = 15105570
         else:
             title = "ChessCord is back online"
             description="ChessCord should now be online, although restoring full functionality might take about a minute."
+            color = 1752220
     data = {
-        "content": f'ChessCord is currently `{f.get("data").get("state")}`...',
+        "content": c,
         "embeds": [
             {
                 "author": {
@@ -39,7 +46,8 @@ def heroku():
                     "icon_url": "https://i.ibb.co/gjDdGpD/heroku.png"
                 },
                 "title": title,
-                "description": description
+                "description": description,
+                "color": color
             }
         ],
         "thumbnail": {
