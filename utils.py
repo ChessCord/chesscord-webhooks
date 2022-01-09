@@ -17,7 +17,7 @@ def parse_heroku(f):
             color = 0xE74C3C
         elif f.get("action") == "create":
             title = "ChessCord starting up"
-            description="ChessCord is now starting up and will be online shortly."
+            description="ChessCord is now starting up and will be online shortly. Sorry for the inconvenience!"
             color = 0xE67E22
         else:
             title = "ChessCord is back online"
