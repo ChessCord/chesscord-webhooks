@@ -29,7 +29,7 @@ def parse_heroku(f):
             {
                 "author": {
                     "name": "Heroku",
-                    "icon_url": "https://i.ibb.co/gjDdGpD/heroku.png"
+                    "icon_url": "https://i.ibb.co/FB90mPD/heroku2.png"
                 },
                 "title": title,
                 "description": description,
