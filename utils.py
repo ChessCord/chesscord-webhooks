@@ -1,0 +1,84 @@
+from typing import Optional, List
+
+import discord
+from discord.utils import utcnow
+
+
+def create_embed(title: Optional[str] = None,
+                 description: Optional[str] = None,
+                 author: Optional[discord.User] = None,
+                 special_author: Optional[List[str]] = None,
+                 fields: Optional[list] = None,
+                 image: Optional[str] = None,
+                 thumbnail: Optional[str] = "https://images.discordapp.net/avatars/811760473422823465/4d2e470acfc0be5ce75fbc23b406c6ce.png?size=1024",
+                 color: Optional[hex] = 0xbd6f29) -> discord.Embed:
+    if title:
+        embed = discord.Embed(title=title, color=color)
+    else:
+        embed = discord.Embed(color=color)
+    if description:
+        embed.description = description
+    if author:
+        embed.set_author(name=author.name, icon_url=author.display_avatar.url)
+    elif special_author:
+        embed.set_author(name=special_author[0], icon_url=special_author[1])
+    if fields:
+        for field in fields:
+            embed.add_field(name=field[0], value=field[1], inline=field[2] if len(field) > 2 else False)
+    if image:
+        embed.set_image(url=image)
+    if thumbnail:
+        embed.set_thumbnail(url=thumbnail)
+    embed.timestamp = utcnow()
+    return embed
+
+
+def parse_heroku(f):
+    if f.get("resource") == "build":
+        c = None
+        if f.get("action") == "update":
+            title = "Build complete"
+            description = "Heroku has finished deploying a new version of ChessCord. The bot should now be back online, although restoring full functionality might take about a minute."
+            color = 0x1ABC9C
+        else:
+            title = "New build started"
+            description = "Heroku has started deploying a new version of ChessCord. The bot will be down for a few minutes while the new version is starting up."
+            color = 0xE74C3C
+    else:
+        c = f'ChessCord is currently `{f.get("data").get("state")}`...'
+        if f.get("action") == "destroy":
+            title = "ChessCord shutting down"
+            description="ChessCord is being terminated. This is most likely part of a daily restart or a new build, and the bot will come back online soon."
+            color = 0xE74C3C
+        elif f.get("action") == "create":
+            title = "ChessCord starting up"
+            description="ChessCord is now starting up and will be online shortly."
+            color = 0xE67E22
+        else:
+            title = "ChessCord is back online"
+            description="ChessCord should now be online, although restoring full functionality might take about a minute."
+            color = 0x1ABC9C
+    data = {
+        "content": c,
+        "embeds": [
+            {
+                "author": {
+                    "NameError": "Heroku",
+                    "icon_url": "https://i.ibb.co/gjDdGpD/heroku.png"
+                },
+                "title": title,
+                "description": description,
+                "color": color,
+                "thumbnail": {
+                    "url": "https://images.discordapp.net/avatars/811760473422823465/4d2e470acfc0be5ce75fbc23b406c6ce.png?size=1024"
+                }
+            }
+        ]
+    }
+    return data
+    # return c, create_embed(
+    #     title,
+    #     description,
+    #     special_author["Heroku", "https://i.ibb.co/gjDdGpD/heroku.png"],
+    #     color=color
+    # )
