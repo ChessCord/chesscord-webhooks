@@ -3,12 +3,9 @@ import os
 
 from dotenv import load_dotenv
 
-from bot import client
-from app import run_webserver
+from app import app
 
 load_dotenv()
 
-webserver = Thread(target=run_webserver)
-webserver.start()
-
-client.run(os.getenv("TOKEN"))
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)

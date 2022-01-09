@@ -3,7 +3,6 @@ import requests
 from flask import Flask, request
 
 from utils import parse_heroku
-from bot import send_msg
 
 app = Flask(__name__)
 
