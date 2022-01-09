@@ -28,7 +28,7 @@ def parse_heroku(f):
         "embeds": [
             {
                 "author": {
-                    "NameError": "Heroku",
+                    "name": "Heroku",
                     "icon_url": "https://i.ibb.co/gjDdGpD/heroku.png"
                 },
                 "title": title,
