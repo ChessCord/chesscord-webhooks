@@ -1,3 +1,2 @@
 flask
 python-dotenv
-git+https://github.com/Pycord-Development/pycord
